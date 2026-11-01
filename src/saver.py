@@ -27,7 +27,7 @@ class JSONSaver(AbstractSaver):
             with open(self.filename, "r", encoding="utf-8") as f:
                 data = json.load(f)
             return data if isinstance(data, list) else []
-        except FileNotFoundError, json.JSONDecodeError:
+        except (FileNotFoundError, json.JSONDecodeError):
             return []
 
     def _write(self, data: list[dict]) -> None:

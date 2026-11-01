@@ -35,7 +35,7 @@ class Aeroplane:
                 altitude = item[7] if item[7] is not None else 0.0
                 velocity = item[9] if item[9] is not None else 0.0
                 result.append(cls(callsign, country, velocity, altitude))
-            except IndexError, TypeError, ValueError:
+            except (IndexError, TypeError, ValueError):
                 continue  # битую строку пропускаем
         return result
 

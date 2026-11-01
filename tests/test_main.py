@@ -1,6 +1,13 @@
 # tests/test_main.py
+from unittest.mock import patch
+
 from src.aeroplane import Aeroplane
-from src.main import filter_by_altitude, filter_by_country, get_top_by_altitude
+from src.main import (
+    filter_by_altitude,
+    filter_by_country,
+    get_top_by_altitude,
+    user_interaction,
+)
 
 
 def test_filter_by_country():
@@ -24,11 +31,6 @@ def test_top_n():
     ]
     top = get_top_by_altitude(planes, 2)
     assert [a.callsign for a in top] == ["B", "C"]
-
-
-from unittest.mock import patch
-
-from src.main import filter_by_altitude, filter_by_country, user_interaction
 
 
 def test_filter_by_country_empty_words():
