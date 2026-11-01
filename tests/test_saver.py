@@ -1,7 +1,9 @@
 # tests/test_saver.py
 import json
-from src.saver import JSONSaver
+
 from src.aeroplane import Aeroplane
+from src.saver import JSONSaver
+
 
 def test_add_and_get(tmp_path):
     path = tmp_path / "a.json"
@@ -11,6 +13,7 @@ def test_add_and_get(tmp_path):
     data = saver.get_aeroplanes()
     assert len(data) == 1 and data[0]["callsign"] == "A"
 
+
 def test_delete(tmp_path):
     path = tmp_path / "a.json"
     saver = JSONSaver(str(path))
@@ -18,6 +21,7 @@ def test_delete(tmp_path):
     saver.add_aeroplane(a)
     saver.delete_aeroplane(a)
     assert saver.get_aeroplanes() == []
+
 
 def test_get_with_criteria(tmp_path):
     path = tmp_path / "a.json"
@@ -27,6 +31,7 @@ def test_get_with_criteria(tmp_path):
     result = saver.get_aeroplanes({"origin_country": "Spain"})
     assert len(result) == 1
     assert result[0]["callsign"] == "B"
+
 
 def test_broken_json(tmp_path):
     path = tmp_path / "a.json"

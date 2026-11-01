@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
+
 import requests
+
 
 class AbstractAPI(ABC):
     """Базовый класс для работы с API."""
@@ -22,8 +24,12 @@ class NominatimAPI(AbstractAPI):
 
     def connect(self) -> None:
         try:
-            r = requests.get(self.BASE_URL, params={"q": "Spain", "format": "json"},
-                             headers=self.headers, timeout=self.timeout)
+            r = requests.get(
+                self.BASE_URL,
+                params={"q": "Spain", "format": "json"},
+                headers=self.headers,
+                timeout=self.timeout,
+            )
             r.raise_for_status()
         except requests.RequestException as e:
             raise ConnectionError(f"Nominatim недоступен: {e}") from e
@@ -31,8 +37,9 @@ class NominatimAPI(AbstractAPI):
     def get_data(self, country: str) -> list:
         params = {"q": country, "format": "json", "limit": 1}
         try:
-            r = requests.get(self.BASE_URL, params=params,
-                             headers=self.headers, timeout=self.timeout)
+            r = requests.get(
+                self.BASE_URL, params=params, headers=self.headers, timeout=self.timeout
+            )
             r.raise_for_status()
             data = r.json()
         except requests.RequestException as e:
@@ -68,8 +75,7 @@ class OpenSkyAPI(AbstractAPI):
             return []
         # boundingbox: [south, north, west, east]
         south, north, west, east = map(float, bbox)
-        params = {"lamin": south, "lamax": north,
-                  "lomin": west, "lomax": east}
+        params = {"lamin": south, "lamax": north, "lomin": west, "lomax": east}
         try:
             r = requests.get(self.BASE_URL, params=params, timeout=self.timeout)
             r.raise_for_status()

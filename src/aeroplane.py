@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+
 class Aeroplane:
     """Модель самолёта. Инкапсулирует данные и сравнение."""
 
-    def __init__(self, callsign: str, origin_country: str,
-                 velocity: float, altitude: float) -> None:
+    def __init__(
+        self, callsign: str, origin_country: str, velocity: float, altitude: float
+    ) -> None:
         if not isinstance(callsign, str) or not callsign.strip():
             raise ValueError("callsign должен быть непустой строкой")
         if not isinstance(origin_country, str) or not origin_country.strip():
@@ -33,7 +35,7 @@ class Aeroplane:
                 altitude = item[7] if item[7] is not None else 0.0
                 velocity = item[9] if item[9] is not None else 0.0
                 result.append(cls(callsign, country, velocity, altitude))
-            except (IndexError, TypeError, ValueError):
+            except IndexError, TypeError, ValueError:
                 continue  # битую строку пропускаем
         return result
 
@@ -65,6 +67,8 @@ class Aeroplane:
         }
 
     def __repr__(self) -> str:
-        return (f"Aeroplane(callsign={self.callsign!r}, "
-                f"country={self.origin_country!r}, "
-                f"velocity={self.velocity}, altitude={self.altitude})")
+        return (
+            f"Aeroplane(callsign={self.callsign!r}, "
+            f"country={self.origin_country!r}, "
+            f"velocity={self.velocity}, altitude={self.altitude})"
+        )
