@@ -38,7 +38,10 @@ class NominatimAPI(AbstractAPI):
         params = {"q": country, "format": "json", "limit": 1}
         try:
             r = requests.get(
-                self.BASE_URL, params=params, headers=self.headers, timeout=self.timeout
+                self.BASE_URL,
+                params=params,
+                headers=self.headers,
+                timeout=self.timeout,
             )
             r.raise_for_status()
             data = r.json()
@@ -73,9 +76,17 @@ class OpenSkyAPI(AbstractAPI):
         bbox = self.nominatim.get_country_boundingbox(country)
         if not bbox or len(bbox) != 4:
             return []
+
         # boundingbox: [south, north, west, east]
         south, north, west, east = map(float, bbox)
-        params = {"lamin": south, "lamax": north, "lomin": west, "lomax": east}
+
+        params = {
+            "lamin": str(south),
+            "lamax": str(north),
+            "lomin": str(west),
+            "lomax": str(east),
+        }
+
         try:
             r = requests.get(self.BASE_URL, params=params, timeout=self.timeout)
             r.raise_for_status()

@@ -1,6 +1,4 @@
 # tests/test_saver.py
-import json
-
 from src.aeroplane import Aeroplane
 from src.saver import JSONSaver
 
